@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>TODO Application</title>
+<link rel='stylesheet' type='text/css' href='css/bootstrap.min.css' />
+<link rel='stylesheet' type='text/css' href='css/app.css' />
+</head>
+
+<body ng-app='todoApp' ng-controller='JsonController as jsonCtrl'>
+  <img src="img/todoAppTitle.png" />
+  <form name='todoForm' ng-controller='FormController as formCtrl'
+    ng-submit='formCtrl.doSubmit()'>
+    <table class="tg" width='500'>
+      <tr>
+        <th class="tg-yw4l" colspan="2">New ToDo</th>
+      </tr>
+      <tr>
+        <td>Title:</td>
+        <td><input type='text' ng-model='formCtrl.newItem.title' /></td>
+      </tr>
+      <tr>
+        <td>Description:</td>
+        <td><textarea type="textarea"
+            ng-model='formCtrl.newItem.text'></textarea></td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center">
+        <input type='submit' value='Add ToDo'></input>
+        </td>
+      </tr>
+    </table>
+  </form>
+
+  <button ng-click='jsonCtrl.getItems();'>Refresh</button>
+  <input type="checkbox" ng-change='jsonCtrl.hideCompleted(this);'
+    ng-model='hideCompleted'>Hide Completed
+  </input>
+
+  <table class="tg" ng-controller='TableController as tableCtrl'>
+    <tr>
+      <th class="tg-yw4l">Date</th>
+      <th class="tg-yw4l">Title</th>
+      <th class="tg-yw4l">Description</th>
+      <th class="tg-yw4l">Completed</th>
+    </tr>
+    <tr ng-repeat='item in todoItems'>
+      <td class="tg-yw4l">{{item.date | myDateFormat}}</td>
+      <td class="tg-yw4l">{{item.title}}</td>
+      <td class="tg-yw4l">{{item.text}}</td>
+      <td class="tg-yw4l"><input type='checkbox'
+        ng-model='item.completed' ng-change='tableCtrl.change(item.num)'></input></td>
+    </tr>
+  </table>
+
+  <button ng-click='jsonCtrl.serverInfo();'>Get Server Info</button>
+  
+  <div>
+  <span ng-bind='serverInfo'></span>
+  </div>
+  
+  <script type="text/javascript" src='js/angular.js'></script>
+  <script type="text/javascript" src='js/todoApp.js'></script>
+</body>
+</html>
